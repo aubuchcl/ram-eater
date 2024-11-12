@@ -2,7 +2,7 @@ import time
 import psutil  # We will use psutil to monitor memory usage
 
 # Define the memory target in bytes (15.5 GB)
-TARGET_MEMORY_USAGE = 15.5 * (1024**3)  # Convert GB to bytes
+TARGET_MEMORY_USAGE = 14.5 * (1024**3)  # Convert GB to bytes
 CURRENT_MEM = 0
 
 # List to hold large memory allocations

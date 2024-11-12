@@ -20,6 +20,9 @@ try:
         print("memusage is:")
         print(current_memory_usage)
 
+        print("Target is:")
+        print(TARGET_MEMORY_GB)
+
         # Allocate memory only if we haven't reached the target usage
         if current_memory_usage < TARGET_MEMORY_USAGE:
             # Allocate 10 MB of memory in each iteration
@@ -29,6 +32,6 @@ try:
             print(f"Reached target memory of {TARGET_MEMORY_USAGE / (1024**3):.1f} GB. Holding...")
 
         # Pause for a moment to slow down allocations
-        time.sleep(0.1)
+        time.sleep(0.5)
 except MemoryError:
     print("Out of memory! Holding at maximum allocated memory.")

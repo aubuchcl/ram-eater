@@ -1,35 +1,29 @@
 import time
-import psutil  # We will use psutil to monitor memory usage
+import psutil  # Import to monitor memory usage
 
-# Define the memory target in bytes (15.5 GB)
-TARGET_MEMORY_USAGE = 14.5 * (1024**3)  # Convert GB to bytes
-CURRENT_MEM = 0
+# Target memory usage in bytes (15 GB)
+TARGET_MEMORY_USAGE = 15 * (1024**3)  # 15 GB in bytes
 
-# List to hold large memory allocations
+# List to hold memory allocations
 memory_eater = []
 
 print("Starting to eat RAM...")
 
 try:
     while True:
-        # Allocate 10MB of memory in each loop iteration
-        memory_eater.append(" " * 100**7)  # 100 MB allocation
         # Check the current memory usage of the process
         process = psutil.Process()
         current_memory_usage = process.memory_info().rss
 
-        # Stop once we reach the target memory usage
-        if current_memory_usage >= TARGET_MEMORY_USAGE:
-            CURRENT_MEM = current_memory_usage
-            print(f"Target memory of {TARGET_MEMORY_USAGE / (1024**3):.1f} GB reached. Halting.")
-            break
+        # Allocate memory only if we haven't reached the target usage
+        if current_memory_usage < TARGET_MEMORY_USAGE:
+            # Allocate 10 MB of memory in each iteration
+            memory_eater.append(" " * 40**7)  # 40 MB allocation
+        else:
+            # Print confirmation and hold the memory
+            print(f"Reached target memory of {TARGET_MEMORY_USAGE / (1024**3):.1f} GB. Holding...")
 
-        # Small sleep to accumulate memory consumption at a steady rate
+        # Pause for a moment to slow down allocations
         time.sleep(0.1)
 except MemoryError:
-    print("Out of memory! Halting.")
-
-
-while True:
-    print(f"At max ram {CURRENT_MEM}")
-    time.sleep(3)
+    print("Out of memory! Holding at maximum allocated memory.")

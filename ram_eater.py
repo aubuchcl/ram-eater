@@ -3,6 +3,7 @@ import psutil  # We will use psutil to monitor memory usage
 
 # Define the memory target in bytes (15.5 GB)
 TARGET_MEMORY_USAGE = 15.5 * (1024**3)  # Convert GB to bytes
+CURRENT_MEM = 0
 
 # List to hold large memory allocations
 memory_eater = []
@@ -19,6 +20,7 @@ try:
 
         # Stop once we reach the target memory usage
         if current_memory_usage >= TARGET_MEMORY_USAGE:
+            CURRENT_MEM = current_memory_usage
             print(f"Target memory of {TARGET_MEMORY_USAGE / (1024**3):.1f} GB reached. Halting.")
             break
 
@@ -26,3 +28,8 @@ try:
         time.sleep(0.1)
 except MemoryError:
     print("Out of memory! Halting.")
+
+
+while True:
+    print(f"At max ram {CURRENT_MEM}")
+    time.sleep(3)

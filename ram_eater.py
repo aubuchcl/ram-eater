@@ -17,6 +17,8 @@ try:
         # Check the current memory usage of the process
         process = psutil.Process()
         current_memory_usage = process.memory_info().rss
+        print("memusage is:")
+        print(current_memory_usage)
 
         # Allocate memory only if we haven't reached the target usage
         if current_memory_usage < TARGET_MEMORY_USAGE:

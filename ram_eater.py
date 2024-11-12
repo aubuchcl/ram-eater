@@ -13,7 +13,7 @@ print("Starting to eat RAM...")
 try:
     while True:
         # Allocate 10MB of memory in each loop iteration
-        memory_eater.append(" " * 10**7)  # 10 MB allocation
+        memory_eater.append(" " * 100**7)  # 100 MB allocation
         # Check the current memory usage of the process
         process = psutil.Process()
         current_memory_usage = process.memory_info().rss

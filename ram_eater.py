@@ -21,7 +21,7 @@ try:
         print(current_memory_usage)
 
         print("Target is:")
-        print(TARGET_MEMORY_GB)
+        print(TARGET_MEMORY_USAGE)
 
         # Allocate memory only if we haven't reached the target usage
         if current_memory_usage < TARGET_MEMORY_USAGE:

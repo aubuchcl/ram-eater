@@ -1,5 +1,6 @@
 import time
 import psutil  # Import to monitor memory usage
+import os
 
 # Target memory usage in bytes (15 GB)
 # Get the target memory usage from an environment variable, default to 15 GB if not set

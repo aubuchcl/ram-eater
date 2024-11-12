@@ -2,7 +2,6 @@ import time
 import psutil  # Import to monitor memory usage
 import os
 
-# Target memory usage in bytes (15 GB)
 # Get the target memory usage from an environment variable, default to 15 GB if not set
 TARGET_MEMORY_GB = float(os.getenv("TARGET_MEMORY_GB", 15))
 TARGET_MEMORY_USAGE = TARGET_MEMORY_GB * (1024**3)  # Convert GB to bytes
@@ -17,21 +16,20 @@ try:
         # Check the current memory usage of the process
         process = psutil.Process()
         current_memory_usage = process.memory_info().rss
-        print("memusage is:")
-        print(current_memory_usage)
-
-        print("Target is:")
-        print(TARGET_MEMORY_USAGE)
+        print(f"Current memory usage: {current_memory_usage} bytes")
+        print(f"Target memory: {TARGET_MEMORY_USAGE} bytes")
 
         # Allocate memory only if we haven't reached the target usage
         if current_memory_usage < TARGET_MEMORY_USAGE:
-            # Allocate 10 MB of memory in each iteration
-            memory_eater.append(" " * 40**7)  # 40 MB allocation
+            # Adjust allocation size to stay close to the target without large jumps
+            allocation_size = min(10**7, TARGET_MEMORY_USAGE - current_memory_usage)
+            memory_eater.append(" " * allocation_size)  # Dynamically allocate memory
         else:
             # Print confirmation and hold the memory
             print(f"Reached target memory of {TARGET_MEMORY_USAGE / (1024**3):.1f} GB. Holding...")
+            time.sleep(10)  # Sleep to avoid further allocations but keep the process alive
 
-        # Pause for a moment to slow down allocations
-        time.sleep(0.5)
+        # Small sleep to control the rate of allocation
+        time.sleep(0.1)
 except MemoryError:
     print("Out of memory! Holding at maximum allocated memory.")
